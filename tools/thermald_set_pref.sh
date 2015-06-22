@@ -1,5 +1,6 @@
 #!/bin/sh
 
+function showtoc() {
 
 echo "****thermald preference****"
 echo "0 : DEFAULT"
@@ -26,6 +27,8 @@ echo "L : Get Zone Trip Information"
 echo "M : Get cdev count"
 echo "N : Get cdev Information"
 
+}
+
 arg="0"
 if [[ "$1" != "" ]]; then 
         if [[ "$2" != "" ]]; then
@@ -35,6 +38,7 @@ if [[ "$1" != "" ]]; then
 	opt_no=$1
 	echo "Taking command line argument as choice!"
 else 
+	showtoc
 	echo -n " Enter thermald preference [1..6]: "
 	read opt_no
 fi
@@ -78,7 +82,7 @@ dbus-send --system --dest=org.freedesktop.thermald /org/freedesktop/thermald org
 ;;
 
 B)
-dbus-send --system --dest=org.freedesktop.thermald --print-reply /org/freedesktop/thermald org.freedesktop.thermald.GetSensorInformation uint32:0
+dbus-send --system --dest=org.freedesktop.thermald --print-reply /org/freedesktop/thermald org.freedesktop.thermald.GetSensorInformation uint32:$arg
 ;;
 
 C)
@@ -110,7 +114,7 @@ dbus-send --system --dest=org.freedesktop.thermald --print-reply /org/freedeskto
 ;;
 
 J)
-dbus-send --system --dest=org.freedesktop.thermald --print-reply /org/freedesktop/thermald org.freedesktop.thermald.GetZoneInformation uint32:0
+dbus-send --system --dest=org.freedesktop.thermald --print-reply /org/freedesktop/thermald org.freedesktop.thermald.GetZoneInformation uint32:$arg
 ;;
 
 K)
